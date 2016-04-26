@@ -3,11 +3,13 @@
  */
 package spaceconquest;
 
+import java.awt.Color;
 import java.util.HashMap;   
 import spaceconquest.Map.Case;
 import spaceconquest.Map.Couleur;
 import spaceconquest.Map.Couple;
 import spaceconquest.ObjetCeleste.ObjetCeleste;
+import spaceconquest.Race.Race;
 import spaceconquest.Race.Vaisseau;
 
 
@@ -46,16 +48,70 @@ public class Carte {
         return this.cases.get(c);
     }
     
+    //met toutes les cases du plateau de jeu en blanc
     public void effacerColoration() {
-        for(int i=1; i<=3*this.getTaille(); i++) {
-            for(int j=1; j<=this.getTaille(); j++) {
+        for(int i=1;i<= 3* this.getTaille();i++) {
+            for(int j=1;j<=this.getTaille();j++) {
                 this.getCase(i,j).setCouleur(Couleur.Blanc);
             }   
         } 
     }
-
-
     
+    
+    public void colorationMouvements(Couple c, Graphe g){
+        int n=this.getTaille(); //taille du plateau
+        int pos=(c.getX()-1)*n+c.getY(); //sommet correspondant aux coordonnées de départ
+        int L=0; //entier des lignes
+        int C=0; //entier des colonnes
+        
+        
+        for (int i=1; i<=n*n*3; i++){
+            if(g.getMatrice(pos, i)==2){ //on teste si le sommet initial est relié aux autres sommets du graphe avec une valeur de 2
+                
+                if(i%n==0){ //récupération des coordonnées en fonction du sommet
+                    L=i/n;
+                    C=n;
+                }else{
+                    L=(i/n)+1;
+                    C=i%n;
+                }
+                this.getCase(L, C).setCouleur(Couleur.Jaune); //colorie en jaune
+            }
+            
+            if(g.getMatrice(pos, i)==1){ //on teste si le sommet initial est relié aux autres sommets du graphe avec une valeur de 1
+                
+                if(i%n==0){ //récupération des coordonnées en fonction du sommet
+                    L=i/n;
+                    C=n;
+                }else{
+                    L=(i/n)+1;
+                    C=i%n;
+                }
+                this.getCase(L, C).setCouleur(Couleur.Vert);  //colorie en vert
+                
+                for(int j=1; j<=n*n*3; j++){ 
+                    if(g.getMatrice(i, j)==1 && j!=pos){ //on teste si les sommets reliés avec le sommet initial avec une valeur de 1 sont eux-mêmes reliés à d'autres sommets avec une valeur de 1, on enlève
+                        if(g.getMatrice(j, pos)==0){
+                           
+                            if(j%n==0){ //récupération des coordonnées en fonction du sommet
+                                L=j/n;
+                                C=n;
+                            }else{
+                                L=(j/n)+1;
+                                C=j%n;
+                            }
+                         this.getCase(L, C).setCouleur(Couleur.Jaune); //colorie en jaune
+                        }
+                        
+                    }
+                }
+            }            
+                
+                
+        }
+    }
+    
+  
     
     //renvoie le graphe modélisant la grille hexagonale (sans contrainte)s
     public Graphe getGrapheGrille(){
@@ -176,32 +232,42 @@ public class Carte {
     public void selectionCase(Couple c) {
         if(c.equals(this.caseSelectionnee)) {
             //deselection de la case
-            this.getCase(c).setCouleur(Couleur.Blanc);
+            this.effacerColoration();
             this.caseSelectionnee = null;
         }
         else {
             //si une case avait déja été sélectionnée
             if(this.caseSelectionnee != null) {
                 //ajouter des conditions de déplacement
+                if(this.getCase(c).getCouleur()==Couleur.Vert.getCouleur() || this.getCase(c).getCouleur()==Couleur.Jaune.getCouleur()){
                 //on fait bouger le vaisseau
                 this.BougerVaisseau(this.caseSelectionnee, c);
                 //on déselectionne la case
                 this.getCase(this.caseSelectionnee).setCouleur(Couleur.Blanc);
                 this.caseSelectionnee = null;
                 //on passe le tour
+                this.effacerColoration();
                 SpaceConquest.tourSuivant();
+                }
             }
-            else {
+            else{
                 //si aucune case n'avait été selectionné
                 //on vérifie que la case nouvellement sélectionné contient un vaisseau du joueur en cours
                 if(this.getCase(c).getVaisseau() != null) {
                     if(this.getCase(c).getVaisseau().getRace() == SpaceConquest.getTour()) {
                         //on selectionne la case
-                        this.getCase(c).setCouleur(Couleur.Rouge);
-                        this.caseSelectionnee = c;
+                           if(SpaceConquest.getTour()==Race.Licorne){
+                                this.colorationMouvements(c, this.getGrapheLicorne());
+                                this.caseSelectionnee = c;
+                            }else{
+                                this.colorationMouvements(c, this.getGrapheZombie());
+                                this.caseSelectionnee = c;
+                           }
                     }
+                                
                 }
             }
         }
     }
 }
+    

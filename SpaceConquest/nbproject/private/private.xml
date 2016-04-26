@@ -2,6 +2,18 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/ObjetCeleste/Etoile.java</file>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/ObjetCeleste/ObjetCeleste.java</file>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/Map/Couleur.java</file>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/Partie.java</file>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/Race/Vaisseau.java</file>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/Map/Case.java</file>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/Carte.java</file>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/SpaceConquest.java</file>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/Graphe.java</file>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/TimerPartie.java</file>
+            <file>file:/C:/Users/Dimi/Desktop/Projet%20Graphe/SpaceConquest/src/spaceconquest/IHM/PanelCarte.java</file>
+        </group>
     </open-files>
 </project-private>
